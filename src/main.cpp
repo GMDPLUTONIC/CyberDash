@@ -1,77 +1,44 @@
 #include <Geode/Geode.hpp>
+#include <Geode/modify/MenuLayer.hpp>
+#include <Geode/modify/LevelSearchLayer.hpp>
 
 using namespace geode::prelude;
 
-#include <Geode/modify/MenuLayer.hpp>
-
-class $modify(MyMenuLayer, MenuLayer) {
-
-	bool init() {
-		if (!MenuLayer::init()) {
+class $modify(HookSearch, LevelSearchLayer) {
+	bool init(int in) {
+		if (!LevelSearchLayer::init(in)) {
 			return false;
 		}
-		log::debug("Hello from my MenuLayer::init hook! This layer has {} children.", this->getChildrenCount());
-
-		auto myButton = CCMenuItemSpriteExtra::create(
-		auto spr = CircleButtonSprite::createWithSpriteFrameName("top-sprite.png"_spr);
+		CCNode* Filter;
+		Filter = this->getChildByID("other-filter-menu");
+		if (!Filter) {
+			 if (!Loader::get()->isModLoaded("geode.node-ids")) {
+				 Filter = this->getChildByType<CCMenu>(0);
+				if (!Filter) {
+					return true;
+				}
+				// bug fix
+				if (!Filter->getLayout()) {
+					auto winSize = CCDirector::get()->getWinSize();
+					Filter->setLayout(
+						ColumnLayout::create()
+							->setAxisReverse(true)
+							->setGap(10)
+							->setAxisAlignment(AxisAlignment::End)
+					);
+					Filter->setAnchorPoint({1, 0.5f});
+					Filter->setPosition({winSize.width - 5, Filter->getPositionY()});
+					Filter->setContentSize({Filter->getContentSize().width, winSize.height-10});
+				}
+			 } else {return true;}
+		}
+		auto BRL_Button = CCMenuItemSpriteExtra::create(
+			 CircleButtonSprite::createWithSprite(
+                "main_btn.png"_spr,
+                1.1,
+               (Mod::get()->getSettingValue<bool>("dark-mode")) ? CircleBaseColor::DarkPurple : CircleBaseColor::Green,
+                CircleBaseSize::Small
+            ),
 			this,
-			/**
-			 * Here we use the name we set earlier for our modify class.
-			*/
-			menu_selector(MyMenuLayer::onMyButton)
+			menu_selector(HookSearch::pushbtncustom)
 		);
-
-		/**
-		 * Here we access the `bottom-menu` node by its ID, and add our button to it.
-		 * Node IDs are a Geode feature, see this page for more info about it:
-		 * https://docs.geode-sdk.org/tutorials/nodetree
-		*/
-		auto menu = this->getChildByID("bottom-menu");
-		menu->addChild(myButton);
-
-		/**
-		 * The `_spr` string literal operator just prefixes the string with
-		 * your mod id followed by a slash. This is good practice for setting your own node ids.
-		*/
-		myButton->setID("my-button"_spr);
-
-		/**
-		 * We update the layout of the menu to ensure that our button is properly placed.
-		 * This is yet another Geode feature, see this page for more info about it:
-		 * https://docs.geode-sdk.org/tutorials/layouts
-		*/
-		menu->updateLayout();
-
-		/**
-		 * We return `true` to indicate that the class was properly initialized.
-		 */
-		return true;
-	}
-
-	/**
-	 * This is the callback function for the button we created earlier.
-	 * The signature for button callbacks must always be the same,
-	 * return type `void` and taking a `CCObject*`.
-	*/
-	void onMyButton(CCObject*) {
-		FLAlertLayer::create("Encouraging Dash", "<cr>Never Give Up. You Will Succeed.</c>", "Close")->show();
-	}
-
-//	int randomInt(int min, int max) {
-//		static std::random_device device;
-//	    static std::mt19937 generator(device());
-//	    std::uniform_int_distribution<int> distribution(min, max);
-//
-//      return distribution(generator);
-//}
-
-
-//	int main()
-//	{
-//	   std::vector<int> nums {1,2,3,4,5,6,7,8,9};
-//
-//	    std::cout << nums[randomInt(0, nums.size() - 1)];
-//
-//	},
-
-};
