@@ -4,22 +4,6 @@ using namespace geode::prelude;
 
 #include <Geode/modify/MenuLayer.hpp>
 
-class $modify(MenuLayer){
-    bool init() {
-        if (!MenuLayer::init()) return false;
-
-        if (!Mod::get()->setSavedValue("seen-intro-popup", true)) {
-            FLAlertLayer* popup = FLAlertLayer::create(
-                "SpaceMenu",
-                "Welcome to SpaceMenu!\n<cb>Use the Page Down key or press the button.</c>",
-                "OK"
-            );
-            popup->m_scene = this;
-            popup->show();
-        }
-	}
-};
-
 class $modify(MyMenuLayer, MenuLayer) {
 
 	bool init() {
@@ -29,7 +13,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 		log::debug("Hello from my MenuLayer::init hook! This layer has {} children.", this->getChildrenCount());
 
 		auto myButton = CCMenuItemSpriteExtra::create(
-			CCSprite::createWithSpriteFrameName("main_btn.png"),
+				CCSprite::create("main_btn.png"_spr),
 			this,
 			/**
 			 * Here we use the name we set earlier for our modify class.
@@ -70,6 +54,6 @@ class $modify(MyMenuLayer, MenuLayer) {
 	 * return type `void` and taking a `CCObject*`.
 	*/
 	void onMyButton(CCObject*) {
-		FLAlertLayer::create("Rampppant", "<cr>Welcome To Rampppant!</c>You Can Open Rampppant", "OK")->show();
+		FLAlertLayer::create("Rampppant", "<cr>Welcome To Rampppant!</c>You Can Open Rampppant by clicking the button in the corner.", "OK")->show();
 	}
 };

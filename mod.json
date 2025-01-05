@@ -8,5 +8,10 @@
 	"name": "Rampppant",
 	"version": "v1.0.0",
 	"developer": "GMP",
-	"description": ""
+	"description": "",
+	"resources": {
+		"sprites": [
+			"resources/main_btn.png"
+		]
+	}
 }
