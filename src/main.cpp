@@ -18,7 +18,7 @@ class $modify(MenuLayer){
             popup->show();
         }
 	}
-}
+};
 
 class $modify(MyMenuLayer, MenuLayer) {
 
