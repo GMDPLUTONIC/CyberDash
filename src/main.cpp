@@ -28,6 +28,6 @@ class $modify(MyMenuLayer, MenuLayer) {
 	}
 
 	void onMyButton(CCObject*) {
-		FLAlertLayer::create("CyberDash", "<cr>Welcome To CyberDash</c>. Click OK To Begin Your Adventure.", "OK")->show();
+		FLAlertLayer::create("Rampppant", "<cr>Welcome To Rampppant</c>. You Can Access The Lists In The Corner Of The Screen.", "OK")->show();
 	}
 };
