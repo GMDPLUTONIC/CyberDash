@@ -13,7 +13,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 		log::debug("Hello from my MenuLayer::init hook! This layer has {} children.", this->getChildrenCount());
 
 		auto myButton = CCMenuItemSpriteExtra::create(
-				CCSprite::create("main_btn.png"_spr),
+		auto spr = CircleButtonSprite::createWithSpriteFrameName("top-sprite.png"_spr);
 			this,
 			/**
 			 * Here we use the name we set earlier for our modify class.
@@ -54,6 +54,24 @@ class $modify(MyMenuLayer, MenuLayer) {
 	 * return type `void` and taking a `CCObject*`.
 	*/
 	void onMyButton(CCObject*) {
-		FLAlertLayer::create("Rampppant", "<cr>Welcome To Rampppant!</c>You Can Open Rampppant by clicking the button in the corner.", "OK")->show();
+		FLAlertLayer::create("Encouraging Dash", "<cr>Never Give Up. You Will Succeed.</c>", "Close")->show();
 	}
+
+//	int randomInt(int min, int max) {
+//		static std::random_device device;
+//	    static std::mt19937 generator(device());
+//	    std::uniform_int_distribution<int> distribution(min, max);
+//
+//      return distribution(generator);
+//}
+
+
+//	int main()
+//	{
+//	   std::vector<int> nums {1,2,3,4,5,6,7,8,9};
+//
+//	    std::cout << nums[randomInt(0, nums.size() - 1)];
+//
+//	},
+
 };
