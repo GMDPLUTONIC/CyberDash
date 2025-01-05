@@ -2,10 +2,10 @@
 
 using namespace geode::prelude;
 
-#include <Geode/modify/MenuLayer.hpp>
-class $modify(MyMenuLayer, MenuLayer) {
+#include <Geode/modify/LevelEditorLayer.hpp>
+class $modify(MyLevelEditorLayer, LevelEditorLayer) {
 	bool init() {
-		if (!MenuLayer::init()) {
+		if (!LevelEditorLayer::init()) {
 			return false;
 		}
 
@@ -14,20 +14,20 @@ class $modify(MyMenuLayer, MenuLayer) {
 		auto myButton = CCMenuItemSpriteExtra::create(
 			CCSprite::createWithSpriteFrameName("GJ_chatBtn_001.png"),
 			this,
-			menu_selector(MyMenuLayer::onMyButton)
+			menu_selector(MyLevelEditorLayer::onRampppant)
 		);
 
 		auto menu = this->getChildByID("bottom-menu");
-		menu->addChild(myButton);
+		menu->addChild(Rampppant);
 
-		myButton->setID("my-button"_spr);
+		Rampppant->setID("Rampppant"_spr);
 
 		menu->updateLayout();
 
 		return true;
 	}
 
-	void onMyButton(CCObject*) {
+	void onRampppant(CCObject*) {
 		FLAlertLayer::create("Rampppant", "<cr>Welcome To Rampppant</c>. You Can Access The Lists In The Corner Of The Screen.", "OK")->show();
 	}
 };
